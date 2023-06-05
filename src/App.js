@@ -1,25 +1,23 @@
-import logo from './logo.svg';
 import './App.css';
+import BioData from './components/BioData';
+
 
 function App() {
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        Hello World
     </div>
   );
 }
+
+// add(10, 20)
+
+/**
+ * Component ->
+ *      1) It must be a function
+ *      2) It should return 'something'
+ *      3) that 'something' should be some html-ish code
+ */
 
 export default App;
