@@ -1,89 +1,68 @@
 import "./App.css";
-import {useState} from 'react'
+import { useState } from "react";
 
 const App = () => {
+	const [noteTitle, setNoteTitle] = useState("");
+	const [notes, setNotes] = useState([]);
+	// notes = [{id: "1", title: "note-1"}, {id: "2", title: "note-2"}]
+	// notes = []
+	//noteTitle = ""
+	// setNoteTitle("a")
+	// noteTitle = "a"
 
-    const [noteTitle, setNoteTitle] = useState('');
-    const [notes, setNotes] = useState([]);
-    // notes = [{id: "1", title: "note-1"}, {id: "2", title: "note-2"}]
-    // notes = []
-    //noteTitle = ""
-    // setNoteTitle("a")
-    // noteTitle = "a"
+	const createNoteHandler = (e) => {
+		e.preventDefault();
+		if (!noteTitle) {
+			return alert(`Please provide a valid note title`);
+		}
 
-    const createNoteHandler = (e) => {
-      e.preventDefault();
-      if (!noteTitle) {
-        return alert(`Please provide a valid note title`)
-      }
-      
-      const newNote = {
-        id: Date.now(),
-        title: noteTitle
-      };
+		const newNote = {
+			id: Date.now(),
+			title: noteTitle,
+		};
 
-      setNotes([...notes, newNote]) // 
-      setNoteTitle('')
-    }
+		setNotes([...notes, newNote]); //
+		setNoteTitle("");
+	};
 
-    const removeNoteHandler = (id) => { // "2"
-        const updatedNotes = notes.filter(item => item.id !== id)
-        //                                (item => "5" !== "2")  
-        //                                (item => "2" !== "2")
+	const removeNoteHandler = (id) => {
+		// "2"
+		const updatedNotes = notes.filter((item) => item.id !== id);
+		//                                (item => "5" !== "2")
+		//                                (item => "2" !== "2")
 
-        setNotes(updatedNotes)
-    }
+		setNotes(updatedNotes);
+	};
 
-    return (
-      <div className="App">
-          <form onSubmit={createNoteHandler}>
-              <input value={noteTitle} onChange={(event) => setNoteTitle(event.target.value)} type="text" />
-              <button type="submit">Add Note</button>
-          </form>
-          <ul>
-              {notes.map(item => (
-                <li key={item.id}>
-                    <span>{item.title}</span>
-                    <button>Edit</button>
-                    <button onClick={() => removeNoteHandler(item.id)}>Delete</button>
-                </li>
-              ))}
-          </ul>
-      </div>
-    )
-}
-
+	return (
+		<div className="App">
+			<form onSubmit={createNoteHandler}>
+				<input
+					value={noteTitle}
+					onChange={(event) => setNoteTitle(event.target.value)}
+					type="text"
+				/>
+				<button type="submit">Add Note</button>
+			</form>
+			<ul>
+				{notes.map((item) => (
+					<li key={item.id}>
+						<span>{item.title}</span>
+						<button>Edit</button>
+						<button onClick={() => removeNoteHandler(item.id)}>
+							Delete
+						</button>
+					</li>
+				))}
+			</ul>
+		</div>
+	);
+};
 
 /**
  * note = {id: "1", title: "note-1"}
  */
-export default App
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export default App;
 
 // import {useState} from 'react'
 
@@ -121,7 +100,6 @@ export default App
 //       <button onClick={() => decreaseHandler(5)}>Decrease By 5</button>
 //       <h2>The value of counter2 is {counter2}</h2>
 //       <button onClick={() => setCounter2(counter2 + 1)}>Increase Counter2 By 1</button>
-
 
 //     </div>
 //   )
