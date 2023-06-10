@@ -2,118 +2,114 @@ import "./App.css";
 import { useState } from "react";
 
 const App = () => {
-	const [noteTitle, setNoteTitle] = useState("");
-	const [notes, setNotes] = useState([]);
-	// notes = [{id: "1", title: "note-1"}, {id: "2", title: "note-2"}]
-	// notes = []
-	//noteTitle = ""
-	// setNoteTitle("a")
-	// noteTitle = "a"
+	const [studentName, setStudentName] = useState("");
+	const [students, setStudents] = useState([]);
+	const [editMode, setEditMode] = useState(false);
+	const [editableStudent, setEditableStudent] = useState(null);
 
-	const createNoteHandler = (e) => {
+	const createStudentHandler = (e) => {
 		e.preventDefault();
-		if (!noteTitle) {
-			return alert(`Please provide a valid note title`);
+		if (!studentName) {
+			return alert(`Please provide a valid name`);
+		}
+		const newStudent = {
+		  id: Date.now(),
+		  name: studentName,
+		  isPresent: undefined
 		}
 
-		const newNote = {
-			id: Date.now(),
-			title: noteTitle,
-		};
-
-		setNotes([...notes, newNote]); //
-		setNoteTitle("");
+    setStudents([...students, newStudent]);
+    setStudentName('')
 	};
 
-	const removeNoteHandler = (id) => {
-		// "2"
-		const updatedNotes = notes.filter((item) => item.id !== id);
-		//                                (item => "5" !== "2")
-		//                                (item => "2" !== "2")
+  const removeHandler = (id) => {
+    const filteredStudents = students.filter(item => item.id !== id);
+    setStudents(filteredStudents)
+  }
 
-		setNotes(updatedNotes);
-	};
+
+  const editHandler = (id) => {
+    const toBeUpdatedStudent = students.find(item => item.id === id);
+    setEditMode(true);
+    setEditableStudent(toBeUpdatedStudent);
+    setStudentName(toBeUpdatedStudent.name)
+  }
+
+  const updateHandler = (e) => {
+    e.preventDefault();
+    if (!studentName) {
+			return alert(`Please provide a valid name`);
+		}
+
+    const updatedStudentsArray = students.map((item) => {
+        if (item.id === editableStudent.id) {
+          item.name = studentName
+        }
+
+        return item
+    });
+
+    setStudents(updatedStudentsArray);
+    setEditMode(false);
+    setEditableStudent(null);
+    setStudentName('')
+  }
+
 
 	return (
 		<div className="App">
-			<form onSubmit={createNoteHandler}>
+			<form onSubmit={editMode ? updateHandler : createStudentHandler}>
 				<input
-					value={noteTitle}
-					onChange={(event) => setNoteTitle(event.target.value)}
 					type="text"
+					value={studentName}
+					onChange={(e) => setStudentName(e.target.value)}
 				/>
-				<button type="submit">Add Note</button>
+				<button type="submit">
+					{editMode ? "Update Student" : "Create Student"}
+				</button>
 			</form>
-			<ul>
-				{notes.map((item) => (
-					<li key={item.id}>
-						<span>{item.title}</span>
-						<button>Edit</button>
-						<button onClick={() => removeNoteHandler(item.id)}>
-							Delete
-						</button>
-					</li>
-				))}
-			</ul>
+			<div className="student-section">
+				<div className="list-section all-students">
+					<h2>All Students</h2>
+					<ul>
+						{students.map((item) => (
+							<li key={item.id}>
+								<span>{item.name}</span>
+								<button onClick={() => editHandler(item.id)}>Edit</button>
+								<button onClick={() => removeHandler(item.id)}>Remove</button>
+								<button>Make present</button>
+								<button>Make Absent</button>
+							</li>
+						))}
+					</ul>
+				</div>
+				<div className="list-section present-students">
+					<h2>Present Students</h2>
+					<ul>
+						{students
+							.filter((item) => item.isPresent === true)
+							.map((item) => (
+								<li key={item.id}>
+									<span>{item.name}</span>
+									<button>Accidentally added</button>
+								</li>
+							))}
+					</ul>
+				</div>
+				<div className="list-section absent-students">
+					<h2>Absent Students</h2>
+					{students
+						.filter((item) => item.isPresent === false)
+						.map((item) => (
+							<li key={item.id}>
+								<span>{item.name}</span>
+								<button>Accidentally added</button>
+							</li>
+						))}
+				</div>
+			</div>
 		</div>
 	);
 };
 
-/**
- * note = {id: "1", title: "note-1"}
- */
 export default App;
-
-// import {useState} from 'react'
-
-// export const App = () => {
-//   console.log("I am being invoked");
-
-//   // let count = 0
-//   // state
-//   const [counter, setCounter] = useState(0); // counter 1
-//   const [counter2, setCounter2] = useState(100)
-
-//   const increaseHandler = (payload) => {
-//       setCounter(counter + payload) // 1 + 1 = 2
-
-//       // counter = 2;
-
-//       // counter++;
-//       console.log(counter, 'from increaseHandler');
-//   };
-
-//   const decreaseHandler = (payload) => {
-//     // counter--;
-//     setCounter(counter - payload) //
-//     console.log(counter, 'from decreaseHandler');
-//   }
-//   return (
-//     <div className="App">
-//       <h2>
-//         The value of the counter is {counter}
-//       </h2>
-//       <button onClick={() => increaseHandler(1)}>Increase By 1</button>
-//       <button onClick={() => increaseHandler(10)}>Increase By 10</button>
-
-//       <button onClick={() => decreaseHandler(1)}>Decrease By 1</button>
-//       <button onClick={() => decreaseHandler(5)}>Decrease By 5</button>
-//       <h2>The value of counter2 is {counter2}</h2>
-//       <button onClick={() => setCounter2(counter2 + 1)}>Increase Counter2 By 1</button>
-
-//     </div>
-//   )
-// }
-
-/**
- * If any of the states change in a component, the component function will rerun on its run
- * If any of the props change in a component, the component function will rerun on its run
- */
-
-// function add (a, b) {
-//   return a + b
-// }
-
-// add (10, 20)
-// add(30, 20)
-// export {};
