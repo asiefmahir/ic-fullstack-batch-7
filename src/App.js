@@ -4,11 +4,11 @@ import { useState } from "react";
 const App = () => {
 	const [noteTitle, setNoteTitle] = useState("");
 	const [notes, setNotes] = useState([]);
-	// notes = [{id: "1", title: "note-1"}, {id: "2", title: "note-2"}]
-	// notes = []
-	//noteTitle = ""
-	// setNoteTitle("a")
-	// noteTitle = "a"
+  /**
+   * note = {id: "1", title: "note 1", isCompleted: false}
+   */
+  const [editMode, setEditMode] = useState(false);
+  const [editableNote, setEditableNote] = useState(null);
 
 	const createNoteHandler = (e) => {
 		e.preventDefault();
@@ -34,21 +34,49 @@ const App = () => {
 		setNotes(updatedNotes);
 	};
 
+  const editHandler = (id) => {
+      const toBeUpdatedNote = notes.find(item => item.id === id);
+      setEditMode(true);
+      setEditableNote(toBeUpdatedNote);
+      setNoteTitle(toBeUpdatedNote.title)
+  };
+
+  const updateHandler = (e) => {
+    e.preventDefault();
+    if (!noteTitle) {
+      return alert(`Please provide a valid note title`)
+    }
+
+    const updatedNotesArray = notes.map((item) => {
+        if (item.id === editableNote.id) {
+          item.title = noteTitle
+        }
+
+        return item  
+    });
+
+    setNotes(updatedNotesArray);
+    setEditMode(false);
+    setEditableNote(null);
+    setNoteTitle('')
+
+  }
+
 	return (
 		<div className="App">
-			<form onSubmit={createNoteHandler}>
+			<form onSubmit={editMode ? updateHandler : createNoteHandler}>
 				<input
 					value={noteTitle}
 					onChange={(event) => setNoteTitle(event.target.value)}
 					type="text"
 				/>
-				<button type="submit">Add Note</button>
+				<button type="submit">{editMode ? 'Update Note' :  'Add Note'}</button>
 			</form>
 			<ul>
 				{notes.map((item) => (
 					<li key={item.id}>
 						<span>{item.title}</span>
-						<button>Edit</button>
+						<button onClick={() => editHandler(item.id)}>Edit</button>
 						<button onClick={() => removeNoteHandler(item.id)}>
 							Delete
 						</button>
