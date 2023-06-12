@@ -55,11 +55,6 @@ const App = () => {
     setStudentName('')
   }
 
-
-
-
-
-
 	return (
 		<div className="App">
 			<form onSubmit={editMode ? updateHandler : createStudentHandler}>
