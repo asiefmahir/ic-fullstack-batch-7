@@ -40,3 +40,13 @@
     transform: rotate(360deg);
   }
 }
+
+.student-section {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 3rem;
+}
+
+.list-section {
+  border: 1px solid black;
+}
