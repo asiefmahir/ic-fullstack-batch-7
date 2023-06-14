@@ -1,15 +1,17 @@
-import React from "react";
+import {useContext} from "react";
+import {StudentContext} from '../contexts/StudentProvider'
 
-const AbsentList = (props) => {
+const AbsentList = () => {
+	const {students, toggleHandler} = useContext(StudentContext)
 	return (
 		<div className="list-section absent-students">
 			<h2>Absent Students</h2>
-			{props.students
+			{students
 				.filter((item) => item.isPresent === false)
 				.map((item) => (
 					<li key={item.id}>
 						<span>{item.name}</span>
-						<button onClick={() => props.toggleHandler(item.id)}>
+						<button onClick={() => toggleHandler(item.id)}>
 							Accidentally added
 						</button>
 					</li>
