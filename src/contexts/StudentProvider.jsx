@@ -1,131 +1,27 @@
-import {createContext, useState} from 'react';
+import { createContext, useReducer } from "react";
+import { studentReducer } from "../reducers/student";
 
-export const StudentContext = createContext()
+const initState = {
+	studentName: "",
+	students: [],
+	editMode: false,
+	editableStudent: null,
+};
 
-const StudentProvider = ({children}) => {
-    const [studentName, setStudentName] = useState("");
-	const [students, setStudents] = useState([]);
-	const [editMode, setEditMode] = useState(false);
-	const [editableStudent, setEditableStudent] = useState(null);
+export const StudentContext = createContext();
 
-    const createStudentHandler = (e) => {
-		e.preventDefault();
-		if (!studentName) {
-			return alert(`Please provide a valid name`);
-		}
-		const newStudent = {
-			id: Date.now(),
-			name: studentName,
-			isPresent: undefined,
-		};
+const StudentProvider = ({ children }) => {
+	const [studentStates, dispatch] = useReducer(studentReducer, initState);
 
-		setStudents([...students, newStudent]);
-		setStudentName("");
+	const contextValues = {
+		studentStates,
+		dispatch
 	};
+	return (
+		<StudentContext.Provider value={contextValues}>
+			{children}
+		</StudentContext.Provider>
+	);
+};
 
-    const updateHandler = (e) => {
-		e.preventDefault();
-		if (!studentName) {
-			return alert(`Please provide a valid name`);
-		}
-
-		const updatedStudentsArray = students.map((item) => {
-			if (item.id === editableStudent.id) {
-				item.name = studentName;
-			}
-
-			return item;
-		});
-
-		setStudents(updatedStudentsArray);
-		setEditMode(false);
-		setEditableStudent(null);
-		setStudentName("");
-	};
-    const removeHandler = (id) => {
-		const filteredStudents = students.filter((item) => item.id !== id);
-		setStudents(filteredStudents);
-	};
-
-	const editHandler = (id) => {
-		const toBeUpdatedStudent = students.find((item) => item.id === id);
-		setEditMode(true);
-		setEditableStudent(toBeUpdatedStudent);
-		setStudentName(toBeUpdatedStudent.name);
-	};
-
-	
-
-	const presentHandler = (id) => {
-		const targetedStudent = students.find(item => item.id === id);
-		if (targetedStudent.isPresent === true || targetedStudent.isPresent === false) {
-			return alert(`The student is already in a list`)
-		}
-
-		const updatedStudents = students.map((item) => {
-			if (item.id === targetedStudent.id) {
-				item.isPresent = true
-			};
-
-			return item
-		})
-
-		setStudents(updatedStudents)
-	}
-
-    const absentHandler = (id) => {
-		const targetedStudent = students.find(item => item.id === id);
-		if (targetedStudent.isPresent === true || targetedStudent.isPresent === false) {
-			return alert(`The student is already in a list`)
-		}
-
-		const updatedStudents = students.map((item) => {
-			if (item.id === targetedStudent.id) {
-				item.isPresent = false
-			};
-
-			return item
-		})
-
-		setStudents(updatedStudents)
-	}
-
-    const toggleHandler = (id) => {
-		const targetedStudent = students.find(item => item.id === id);
-
-		const updatedStudents = students.map((item) => {
-			if (item.id === targetedStudent.id) {
-				item.isPresent = !item.isPresent
-			};
-
-			return item
-		})
-
-		setStudents(updatedStudents)
-	}
-
-    const contextValues = {
-        studentName,
-        setStudentName,
-        students,
-        setStudents,
-        editMode,
-        setEditMode,
-        editableStudent,
-        setEditableStudent,
-        createStudentHandler,
-        editHandler,
-        updateHandler,
-        removeHandler,
-        presentHandler,
-        absentHandler,
-        toggleHandler
-    }
-    return (
-        <StudentContext.Provider value={contextValues}>
-            {children}
-        </StudentContext.Provider>
-    )
-}
-
-export default StudentProvider
+export default StudentProvider;
