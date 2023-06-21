@@ -10,7 +10,7 @@ const AllStudentList = () => {
 			return alert(`The student is already in a list`)
 		}
 
-		dispatch({type: 'SEND_TO_PRESENT_LIST', payload: student.id})
+		dispatch({type: 'UPDATE_STUDENT_PROPERTY', payload: {id: student.id, propertyName: 'isPresent', value: true}})
 	}
 
 	const absentHandler = (student) => {
@@ -18,7 +18,7 @@ const AllStudentList = () => {
 			return alert(`The student is already in a list`)
 		}
 
-		dispatch({type: 'SEND_TO_ABSENT_LIST', payload: student.id})
+		dispatch({type: 'UPDATE_STUDENT_PROPERTY', payload: {id: student.id, propertyName: 'isPresent', value: false}})
 	}
 
 	return (
