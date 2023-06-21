@@ -32,77 +32,23 @@ export const studentReducer = (currentState, action) => {
 			}
 		}
 
-		// case "UPDATE_STUDENT_PROPERTY" : {
-		// 	return {
-		// 		...currentState,
-		// 		students: currentState.students.map(item => {
-		// 			if (item.id === action.payload.id) {
-		// 				item[action.payload.property] = action.payload.propertyValue
-		// 			}
-
-		// 			return item
-		// 		}),
-		// 		editMode: action.payload.property === 'name' ? false : currentState.editMode,
-		// 		editableStudent: action.payload.property === 'name' ? null : currentState.editableStudent,
-		// 		studentName: action.payload.property === 'name' ? '' : currentState.studentName
-		// 	}
-		// }
-
-		case "UPDATE_STUDENT" : {
+		case "UPDATE_STUDENT_PROPERTY" : {
 			return {
 				...currentState,
 				students: currentState.students.map(item => {
-					if (item.id === currentState.editableStudent.id) {
-						item.name = currentState.studentName
+					if (item.id === action.payload.id) {
+						item[action.payload.propertyName] = action.payload.value
+						// item['name'] === item.name = "student updated"
 					}
 
 					return item
 				}),
-				editMode: false,
-				editableStudent:  null, 
-				studentName: ''
+				editMode: action.payload.propertyName === 'name' ? false : currentState.editMode,
+				editableStudent: action.payload.propertyName === 'name' ? null : currentState.editableStudent,
+				studentName: action.payload.propertyName === 'name' ? '' : currentState.studentName
 			}
 		}
-
-		case 'SEND_TO_PRESENT_LIST' : {
-			return {
-				...currentState,
-				students: currentState.students.map(item => {
-					if (item.id === action.payload) {
-						item.isPresent = true
-					}
-
-					return item
-				})
-			}
-		}
-
-		case 'SEND_TO_ABSENT_LIST' : {
-			return {
-				...currentState,
-				students: currentState.students.map(item => {
-					if (item.id === action.payload) {
-						item.isPresent = false
-					}
-
-					return item
-				})
-			}
-		}
-
-		case 'TOGGLE_PRESENT_VALUE' : {
-			return {
-				...currentState,
-				students: currentState.students.map(item => {
-					if (item.id === action.payload) {
-						item.isPresent = !item.isPresent
-					}
-
-					return item
-				})
-			}
-		}
-
+		
 		
 
 		case "REMOVE_STUDENT": {

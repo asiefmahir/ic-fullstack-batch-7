@@ -11,7 +11,7 @@ const AbsentList = () => {
 				.map((item) => (
 					<li key={item.id}>
 						<span>{item.name}</span>
-						<button onClick={() => dispatch({type: "TOGGLE_PRESENT_VALUE", payload: item.id})}>
+						<button onClick={() => dispatch({type: 'UPDATE_STUDENT_PROPERTY', payload: {id: item.id, propertyName: 'isPresent', value: !item.isPresent}})}>
 							Accidentally added
 						</button>
 					</li>
