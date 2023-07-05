@@ -1,17 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { RouterProvider } from 'react-router-dom';
 import './index.css';
+
+import { router } from './router';
+
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import StudentProvider from './contexts/StudentProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  // <React.StrictMode>
+  <React.StrictMode>
     <StudentProvider>
       <App />
     </StudentProvider>
-  // </React.StrictMode>
+  </React.StrictMode>
+  // <RouterProvider router={router}/>
 );
 
 
