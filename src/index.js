@@ -1,20 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { RouterProvider } from 'react-router-dom';
 import './index.css';
-
-import { router } from './router';
 
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import StudentProvider from './contexts/StudentProvider';
+import BoardProvider from './contexts/Board';
+import ListProvider from './contexts/List';
+import TaskProvider from './contexts/Task';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <StudentProvider>
-      <App />
-    </StudentProvider>
+    
+      <BoardProvider>
+          <ListProvider>
+              <TaskProvider>
+                  <App />
+              </TaskProvider>
+          </ListProvider>
+      </BoardProvider>
   </React.StrictMode>
   // <RouterProvider router={router}/>
 );
