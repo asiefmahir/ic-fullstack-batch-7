@@ -37,6 +37,19 @@ export const listReducer = (lists = [], action) => {
             })
         }
 
+        case 'SORT_TASK_IDS_IN_LIST' : {
+            const {source, destination, draggableId} = action.payload;
+            const previousList = lists.find(item => item.id === source.droppableId);
+            const latestList = lists.find(item => item.id === destination.droppableId);
+
+            
+            previousList.tasks.splice(source.index, 1)
+
+            latestList.tasks.splice(destination.index, 0, draggableId);
+
+            return [...lists]
+        }
+
         case 'ADD_TASK_ID_TO_LIST' : {
             return lists.map(item => {
                 if (item.id === action.payload.id) {
