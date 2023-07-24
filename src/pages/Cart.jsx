@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import Nav from "../components/Nav";
 import CartItem from "../components/CartItem";
+import { clearCart } from "../store/actions/cart";
 
 
 
@@ -44,7 +45,7 @@ const Cart = () => {
                     You Total Price Will be $ {totalAmount}
                 </h2>
                 <div className="mt-50">
-                    <button onClick={() => dispatch({type: 'CLEAR_CART'})} type="button" className="btn-big">Clear Cart</button>
+                    <button onClick={() => dispatch(clearCart())} type="button" className="btn-big">Clear Cart</button>
                 </div>
             </div>
         </>
