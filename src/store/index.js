@@ -1,8 +1,28 @@
-// import { createStore, combineReducers } from "redux";
-// import {composeWithDevTools} from '@redux-devtools/extension'
+import { createStore, combineReducers, applyMiddleware } from "redux";
+import {composeWithDevTools} from '@redux-devtools/extension'
+import { counterReducer } from "./reducers/counter";
+import { themeReducer } from "./reducers/theme";
+import { cartReducer } from "./reducers/cart";
+// import { ourMiddleWare } from "./middlewares";
+import logger from 'redux-logger'
+import { postReducer } from "./reducers/post";
+import { todoReducer } from "./reducers/todo";
+import thunk from 'redux-thunk'
+
+const rootReducer = combineReducers({
+    counter: counterReducer,
+    theme: themeReducer,
+    cart: cartReducer,
+    post: postReducer,
+    todo: todoReducer
+})
+
+export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(logger, thunk)))
+
+// import {configureStore, combineReducers} from '@reduxjs/toolkit';
 // import { counterReducer } from "./reducers/counter";
 // import { themeReducer } from "./reducers/theme";
-// import { cartReducer } from "./reducers/cart";
+// import {cartReducer} from "./reducers/cart";
 
 // const rootReducer = combineReducers({
 //     counter: counterReducer,
@@ -10,19 +30,6 @@
 //     cart: cartReducer
 // })
 
-// export const store = createStore(rootReducer, composeWithDevTools())
-
-import {configureStore, combineReducers} from '@reduxjs/toolkit';
-import { counterReducer } from "./reducers/counter";
-import { themeReducer } from "./reducers/theme";
-import {cartReducer} from "./reducers/cart";
-
-const rootReducer = combineReducers({
-    counter: counterReducer,
-    theme: themeReducer,
-    cart: cartReducer
-})
-
-export const store = configureStore({
-    reducer: rootReducer,
-})
+// export const store = configureStore({
+//     reducer: rootReducer,
+// })
