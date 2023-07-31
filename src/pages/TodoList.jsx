@@ -16,7 +16,7 @@ const TodoList = () => {
         <Nav />
         <h2>All Post</h2>
         {isLoading && <h2>Loading.....</h2>}
-        {errorMessage && <h2>{errorMessage}</h2>}
+        {errorMessage &&  <h2>{errorMessage}</h2>}
         <ul>
             {todos.map(item => (
                 <li key = {item.id}>{item.title}</li>
