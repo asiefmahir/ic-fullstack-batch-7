@@ -22,16 +22,16 @@ export const fetchPosts = async (dispatch) => {
     }
 }
 
-export const fetchTodos = async (dispatch) => {
-    try {
-        const result = await fetch(`https://jsonplaceholder.typicode.com/todos?_limit=5`);
-        dispatch({ type: 'todo/fetchStart' })
-        const data = await result.json();
-        dispatch({ type: 'todo/fetchSucceed', payload: data })
-    } catch (err) {
-        dispatch({ type: 'todo/fetchRejected', payload: err.message })
-    }
-} 
+// export const fetchTodos = async (dispatch) => {
+//     try {
+//         const result = await fetch(`https://jsonplaceholder.typicode.com/todos?_limit=5`);
+//         dispatch({ type: 'todo/fetchStart' })
+//         const data = await result.json();
+//         dispatch({ type: 'todo/fetchSucceed', payload: data })
+//     } catch (err) {
+//         dispatch({ type: 'todo/fetchRejected', payload: err.message })
+//     }
+// } 
 
 
 // action -> String -> Object -> Function
