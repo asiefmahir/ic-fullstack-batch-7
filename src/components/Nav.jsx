@@ -19,6 +19,12 @@ function Nav() {
 						<li>
 							<Link to="/todos">Todos</Link>
 						</li>
+						<li>
+							<Link to="/todos/create">Create Todo</Link>
+						</li>
+						<li>
+							<Link to="/demo">Demo</Link>
+						</li>
 					</ul>
 				</nav>
 			</div>

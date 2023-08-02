@@ -1,19 +1,17 @@
-import {useEffect} from 'react';
 import Nav from '../components/Nav';
 // import {fetchTodos} from '../store/reducers/todo''
-import { useGetAllTodosQuery, useRemoveTodoMutation } from '../store/reducers/todo';
+import { useGetAllTodosQuery } from '../store/reducers/todo';
 
-const TodoList = () => {
+const Demo = () => {
     // const {isLoading, todos, errorMessage} = useSelector(store => store.todo);
     // const dispatch = useDispatch()
 
     // useEffect(() => {
     //     dispatch(fetchTodos())
     // }, [])
-    console.log("todoList Rerender");
+    console.log("Demo Rerender");
 
     const {isError, isFetching, data: todos, error} = useGetAllTodosQuery();
-    const [removeTodo] = useRemoveTodoMutation()
 
   return (
     <div>
@@ -25,7 +23,6 @@ const TodoList = () => {
             {todos?.map(item => (
                 <li key = {item.id}>
                     <p>{item.title}</p>
-                    <button onClick={() => removeTodo(item.id)}>Delete</button>
                 </li>
             ))}
         </ul>
@@ -33,4 +30,4 @@ const TodoList = () => {
   )
 }
 
-export default TodoList
+export default Demo
