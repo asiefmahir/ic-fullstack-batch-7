@@ -87,13 +87,16 @@ export const todoApi = createApi({
     reducerPath: 'todo',
     baseQuery: fetchBaseQuery({baseUrl: `http://localhost:4000/todos`}),
     tagTypes: ['Todos'],
+    // refetchOnMountOrArgChange: true,
     endpoints: (builder) => ({
         getAllTodos: builder.query({
             query: () => `?_limit=5`,
             providesTags: ['Todos'],
             transformResponse: (res) => {
                 return res.sort((a, b) => b.id - a.id)
-            }
+            },
+
+            // refetchOnMountOrArgChange: true
         }),
 
         removeTodo: builder.mutation({
@@ -101,12 +104,20 @@ export const todoApi = createApi({
                 url: `/${todoId}`,
                 method: 'DELETE'
             }),
+            invalidatesTags: ['Todos']
+        }),
+
+        createTodo: builder.mutation({
+            query: (todo) => ({
+                url: `/`,
+                method: 'POST',
+                body: todo
+            }),
 
             invalidatesTags: ['Todos']
-            
         })
     })
 })
 
-export const {useGetAllTodosQuery, useRemoveTodoMutation} = todoApi
+export const {useGetAllTodosQuery, useRemoveTodoMutation, useCreateTodoMutation} = todoApi
 

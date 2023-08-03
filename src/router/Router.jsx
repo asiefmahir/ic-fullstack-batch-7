@@ -3,6 +3,8 @@ import Shop from '../pages/Shop'
 import Cart from '../pages/Cart'
 import PostList from "../pages/PostList";
 import TodoList from "../pages/TodoList";
+import TodoForm from "../pages/TodoForm";
+import Demo from "../pages/Demo";
 
 
 const Router = () => {
@@ -13,6 +15,10 @@ const Router = () => {
                 <Route path="/cart" element={<Cart />}/>
                 <Route path="/posts" element={<PostList />}/>
                 <Route path="/todos" element={<TodoList />}/>
+                <Route path="/todos/create" element={<TodoForm />}/>
+                <Route path="/demo" element={<Demo />}/>
+
+
 
             </Routes>
         </BrowserRouter>
