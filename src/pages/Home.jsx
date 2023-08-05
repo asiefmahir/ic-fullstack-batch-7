@@ -1,8 +1,8 @@
 import Nav from '../components/Nav';
 import { useFetchPostsQuery } from '../hooks/useFetchPostsQuery';
 
-const PostList = () => {
-    const {isError, isFetching, error, posts} = useFetchPostsQuery()
+const Home = () => {
+    const {isFetching, isError, error, posts} = useFetchPostsQuery()
   return (
     <div>
         <Nav />
@@ -18,4 +18,4 @@ const PostList = () => {
   )
 }
 
-export default PostList
+export default Home
