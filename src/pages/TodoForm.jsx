@@ -1,12 +1,28 @@
 import {useState} from 'react'
 import Nav from '../components/Nav';
 import { useNavigate } from 'react-router-dom';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { useCreateTodoMutation } from '../store/reducers/todo';
 
 const TodoForm = () => {
     const [todoTitle, setTodoTitle] = useState('');
-    const [createTodo] = useCreateTodoMutation();
+    const client = useQueryClient()
+
+
+    const createTodo = useMutation({
+        mutationFn: async (newTodo) => (
+            await fetch(`http://localhost:4000/todos`, {
+                method: 'POST',
+                headers: {
+                    'Content-type': 'application/json'
+                },
+                body: JSON.stringify(newTodo)
+            })
+        ),
+        onSuccess: () => {
+            client.invalidateQueries(['Todos'])
+        }
+    })
     const navigate = useNavigate()
     const createHandler = (e) => {
         e.preventDefault();
@@ -17,7 +33,7 @@ const TodoForm = () => {
             completed: false
         };
 
-        createTodo(newTodo);
+        createTodo.mutate(newTodo);
         navigate('/todos')
     }
     return (
