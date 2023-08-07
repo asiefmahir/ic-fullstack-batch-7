@@ -1,21 +1,32 @@
-import Nav from '../components/Nav';
-import { useFetchPostsQuery } from '../hooks/useFetchPostsQuery';
+import React from "react";
+import Person from "../components/Person";
+import Counter from "../components/Counter";
+import Posts from "../components/Posts";
+import Nav from "../components/Nav";
+import Todos from "../components/Todos";
+import ComponentWithFetch from "../renderProps/ComponentWithFetch";
 
 const Home = () => {
-    const {isFetching, isError, error, posts} = useFetchPostsQuery()
-  return (
-    <div>
-        <Nav />
-        <h2>All Post</h2>
-        {isFetching && <h2>Loading.....</h2>}
-        {isError && <h2>{error.message}</h2>}
-        <ul>
-            {posts?.map(item => (
-                <li key = {item.id}>{item.title}</li>
-            ))}
-        </ul>
-    </div>
-  )
-}
+	return (
+		<>
+            <Nav />
+			<Person name="Yousuf Khan" age={27} />
+			<hr />
+			<Counter demo="Hello" />
+			<hr />
+			<ComponentWithFetch url={`https://jsonplaceholder.typicode.com/posts?_limit=5`} initData={[]}>
+                {(data, isLoading, errorMessage) => (
+                    <Posts data={data} isLoading={isLoading} errorMessage = {errorMessage}/>
+                )}
+            </ComponentWithFetch>
+            <hr />
+            <ComponentWithFetch url={`https://jsonplaceholder.typicode.com/todos?_limit=5`} initData = {[]}>
+                {(data, isLoading, errorMessage) => (
+                    <Todos data={data} isLoading={isLoading} errorMessage={errorMessage}/>
+                )}
+            </ComponentWithFetch>
+		</>
+	);
+};
 
-export default Home
+export default Home;
