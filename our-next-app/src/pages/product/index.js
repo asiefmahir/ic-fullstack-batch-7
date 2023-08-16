@@ -6,8 +6,8 @@ const Products = ({products}) => {
         <h2>All Products</h2>
         <ul>
             {products.map(item => (
-                <Link href={`/product/${item.id}`}>
-                    <li key={item.id}>{item.title}</li>
+                <Link key={item.id} href={`/product/${item.id}`}>
+                    <li>{item.title}</li>
                 </Link>
             ))}
             
@@ -17,12 +17,13 @@ const Products = ({products}) => {
 }
 
 export const getStaticProps = async () => {
-  const res = await fetch(`https://jsonplaceholder.typicode.com/posts?_limit=5`)
+  const res = await fetch(`http://localhost:4000/products`)
   const products = await res.json()
   return { 
     props: {
         products
-    }
+    },
+    revalidate: 15
   }
 }
 
@@ -30,6 +31,9 @@ export const getStaticProps = async () => {
 /**
  * Prerendering
  * 1) Static Generation -> Default
+ *    -> i) Static generation
+ *    -> ii) Incremental Static generation (ISR)
+ *    -> iii) On Demand Incremental Static generation (ISR)
  * 2) Server Side Generation -> 
  */
 
