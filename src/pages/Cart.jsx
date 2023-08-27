@@ -6,12 +6,12 @@ import Header from "../components/Header";
 
 import { CLEAR_CART } from "../actions/action-types/cart";
 import { CartContext } from "../contexts/Cart";
-// import { AuthContext } from '../contexts/Auth';
+import { AuthContext } from '../contexts/Auth';
 
 
 const Cart = () => {
     const {cart, dispatchCartAction} = useContext(CartContext);
-    // const authContext = useContext(AuthContext);
+    const authContext = useContext(AuthContext);
     const navigate = useNavigate()
 
 
@@ -54,7 +54,7 @@ const Cart = () => {
                     <button onClick = {() => dispatchCartAction({type: CLEAR_CART})}type="button" className="">Clear Cart</button>
                     </div>
                     <div className="mt-50">
-                        <button  onClick = {() => navigate('/order-placing-form')}type="button" className="">
+                        <button disabled= {!authContext.isUserLoggedIn || cart.length === 0} onClick = {() => navigate('/order-placing-form')}type="button" className="">
                             Place Order
                         </button>
                     </div>
