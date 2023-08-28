@@ -58,9 +58,9 @@ function Header() {
 							(authContext?.user?.role === "super-admin" ||
 								authContext?.user?.role === "admin") && (
 								<li>
-									<Link to="admin/order-list">Order List</Link>
+									<Link to="/admin/order-list">Order List</Link>
 								</li>
-							)}
+						)}
 						{authContext.isUserLoggedIn && (
 							<li>
 								<button onClick={() => authContext.logout()}>
