@@ -9,8 +9,10 @@ import PrivateUserRoute from "../components/PrivateRoute"
 import PrivateAdminRoute from "../components/PrivateAdminRoute"
 import OrderList from "../pages/OrderList"
 import AddressForm from "../pages/AddressForm"
-
-
+import Users from '../pages/Users'
+import ProductAddForm from '../pages/ProductAddForm'
+import Products from '../pages/Products'
+import ProductEditForm from '../pages/ProductEditForm'
 
 
 const MainRouter = () => {
@@ -37,33 +39,28 @@ const MainRouter = () => {
                   </PrivateUserRoute>
                 }
             />
-             {/* <Route path = '/admin/users' element = {
+             <Route path = '/admin/users' element = {
                 <PrivateAdminRoute>
                   <Users />
                 </PrivateAdminRoute>
               } 
-            /> */}
+            />
 
-            {/* <Route path = '/admin/products' element = {
+            <Route path = '/admin/products' element = {
                 <PrivateAdminRoute>
                   <Products />
                 </PrivateAdminRoute>
               } 
-            /> */}
+            />
 
-            {/* <Route path = '/admin/users' element = {
-                <PrivateAdminRoute>
-                  <Users />
-                </PrivateAdminRoute>
-              } 
-            /> */}
-            {/* <Route path = '/admin/product-form' 
+            
+            <Route path = '/admin/product-form' 
                 element = {
                   <PrivateAdminRoute>
                       <ProductAddForm />
                   </PrivateAdminRoute>
                 }
-            /> */}
+            />
             <Route path = 'admin/order-list' 
                 element = {
                   <PrivateAdminRoute>
@@ -71,13 +68,13 @@ const MainRouter = () => {
                   </PrivateAdminRoute>
                 }
             />
-            {/* <Route path = '/admin/product-edit-form/:id' 
+            <Route path = '/admin/product-edit-form/:id' 
                 element = {
                   <PrivateAdminRoute>
                       <ProductEditForm />
                   </PrivateAdminRoute>
                 }
-            /> */}
+            />
             {/* <Route path = '/products/:id' element = {<ProductDetails />}/> */}
         </Routes>
     </BrowserRouter>
